@@ -38,7 +38,7 @@ func NewConfig() Config {
 	c := Config{
 		RootPath:       ".",
 		Recurse:        true,
-		ExcludePattern: `\.go$`,
+		ExcludePattern: `(^\.|\.go$)`,
 		OutputPath:     "embedded.go",
 		PackageName:    "embedded",
 		MinifyTypes: map[string]string{
@@ -46,8 +46,8 @@ func NewConfig() Config {
 			".css$":   "text/css",
 			".html?$": "text/html",
 		},
-		CompressPattern:   ".(css|js|html)$",
-		NoCompressPattern: `.(jpe?g|png|gif|woff2?|eot|ttf|ico)$`,
+		CompressPattern:   `\.(css|js|html)$`,
+		NoCompressPattern: `\.(jpe?g|png|gif|woff2?|eot|ttf|ico)$`,
 	}
 	c.now = time.Now().Unix()
 	c.minifier = minifier()

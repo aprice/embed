@@ -137,6 +137,7 @@ func minifier() *minify.M {
 		KeepEndTags:             true,
 	})
 	m.AddFunc("text/javascript", js.Minify)
+	m.AddFunc("application/javascript", js.Minify)
 	m.AddFunc("image/svg+xml", svg.Minify)
 	return m
 }
