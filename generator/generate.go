@@ -188,9 +188,11 @@ func generateFile(in io.Reader, out io.Writer, name string, conf Config, modTime
 		Modified: time.Unix(%v, 0),
 `,
 		filepath.ToSlash(name), hash(contents), modTime)
-	fmt.Fprintf(out, "\t\tRaw: `\n%s`,\n", encodeB64(contents))
+
 	if conf.compressMatcher.MatchString(name) && !conf.noCompressMatcher.MatchString(name) {
 		fmt.Fprintf(out, "\t\tCompressed: `\n%s`,\n", encodeB64(compress(contents)))
+	} else {
+		fmt.Fprintf(out, "\t\tRaw: `\n%s`,\n", encodeB64(contents))
 	}
 	fmt.Fprint(out, "\t})\n")
 	return nil

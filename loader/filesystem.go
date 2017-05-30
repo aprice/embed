@@ -2,33 +2,20 @@ package loader
 
 import (
 	"bytes"
-	"errors"
-	"fmt"
 	"net/http"
 	"os"
 	"path"
-	"path/filepath"
-	"strings"
 	"time"
 )
 
 // Open implements http.FileSystem
 func (l *EmbeddedLoader) Open(name string) (http.File, error) {
-	if filepath.Separator != '/' && strings.ContainsRune(name, filepath.Separator) ||
-		strings.Contains(name, "\x00") {
-		return nil, errors.New("http: invalid character in file path")
-	}
 	if v, ok := l.content[path.Clean(name)]; ok {
-		fmt.Println("found file: ", name)
-		//TODO: Etag handling
-		//TODO: Gzip handling
 		return &embeddedFile{bytes.NewReader(v.RawBytes), v}, nil
 	}
 	if v, ok := l.dirs[path.Clean(name)]; ok {
-		fmt.Println("found dir: ", name)
 		return v, nil
 	}
-	fmt.Println("not found: ", name)
 	return nil, os.ErrNotExist
 }
 

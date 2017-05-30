@@ -1,10 +1,14 @@
 package loader
 
 import (
+	"bytes"
+	"compress/gzip"
 	"encoding/base64"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"path"
+	"strings"
 )
 
 type EmbeddedLoader struct {
@@ -23,11 +27,16 @@ func New() *EmbeddedLoader {
 }
 
 func (l *EmbeddedLoader) Add(c *Content) {
-	c.RawBytes, _ = base64.RawStdEncoding.DecodeString(c.Raw)
 	if len(c.Compressed) > 0 {
 		c.CompressedBytes, _ = base64.RawStdEncoding.DecodeString(c.Compressed)
 	} else {
 		c.CompressedBytes = make([]byte, 0)
+	}
+	if strings.TrimSpace(c.Raw) != "" {
+		c.RawBytes, _ = base64.RawStdEncoding.DecodeString(c.Raw)
+	} else if len(c.CompressedBytes) > 0 {
+		gzr, _ := gzip.NewReader(bytes.NewReader(c.CompressedBytes))
+		c.RawBytes, _ = ioutil.ReadAll(gzr)
 	}
 	c.Raw = ""
 	c.Compressed = ""
