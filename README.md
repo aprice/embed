@@ -17,7 +17,7 @@ content; and calculate checksums for handling Etag-based conditional requests.
 ## Installation
 Embedding tool: `go get github.com/aprice/embed/cmd/embed`
 
-Usage library: `go get github.com/aprice/loader`
+Usage library: `go get github.com/aprice/embed/loader`
 
 ## Usage
 Embed can easily be run with `go generate`.
