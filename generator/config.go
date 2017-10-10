@@ -46,7 +46,7 @@ func NewConfig() Config {
 			".css$":   "text/css",
 			".html?$": "text/html",
 		},
-		CompressPattern:   `\.(css|js|html)$`,
+		CompressPattern:   `\.(css|js|html?|json|xml|tpl|svg)$`,
 		NoCompressPattern: `\.(jpe?g|png|gif|woff2?|eot|ttf|ico)$`,
 	}
 	c.now = time.Now().Unix()
@@ -55,6 +55,9 @@ func NewConfig() Config {
 }
 
 func (c *Config) normalize() {
+	if c.RootPath == "" {
+		c.RootPath = "."
+	}
 	c.RootPath = filepath.FromSlash(c.RootPath)
 	c.OutputPath = filepath.FromSlash(c.OutputPath)
 	if c.DevOutputPath != "" {

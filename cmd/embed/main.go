@@ -9,6 +9,7 @@ import (
 	flag "github.com/spf13/pflag"
 
 	"github.com/aprice/embed/generator"
+	_ "github.com/aprice/embed/loader"
 )
 
 func main() {
@@ -33,6 +34,6 @@ func main() {
 		fmt.Printf("Generation failed: %s\n", err)
 		os.Exit(2)
 	} else {
-		fmt.Printf("Generation complete in %v\n", time.Now().Sub(t1))
+		fmt.Printf("Generation complete in %v\n", time.Since(t1))
 	}
 }

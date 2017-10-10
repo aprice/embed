@@ -10,6 +10,7 @@ type DiskLoader struct {
 	http.Handler
 }
 
+// NewOnDisk creates a new Loader that loads content from disk.
 func NewOnDisk(root string) *DiskLoader {
 	return &DiskLoader{
 		Root:    root,

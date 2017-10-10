@@ -19,6 +19,7 @@ import (
 	"github.com/tdewolff/minify/svg"
 )
 
+// Generate embedded files from a configuration.
 func Generate(conf Config) error {
 	conf.normalize()
 	err := conf.buildMatchers()
@@ -67,7 +68,9 @@ func generate(conf Config, out io.Writer) error {
 			}
 			t = stat.ModTime().Unix()
 		}
-		err = generateFile(f, out, strings.TrimPrefix(fpath, conf.RootPath), conf, t)
+		normPath := strings.TrimPrefix(fpath, conf.RootPath)
+		normPath = filepath.Clean(string(filepath.Separator) + normPath)
+		err = generateFile(f, out, normPath, conf, t)
 		if err != nil {
 			return fmt.Errorf("failed to embed %s: %s", fpath, err)
 		}
@@ -170,7 +173,7 @@ func _initEmbeddedContent() {
 }
 
 func generateFile(in io.Reader, out io.Writer, name string, conf Config, modTime int64) error {
-	ctype := conf.getContentType(name)
+	ctype := conf.getContentType(filepath.Base(name))
 	var contents []byte
 	var err error
 	if ctype != "" {

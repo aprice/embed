@@ -1,0 +1,7 @@
+{
+	"RootPath": "./",
+	"OutputPath": "./embedded.go",
+	"BuildConstraints": "test",
+	"PackageName": "testdata",
+	"ExcludePattern": "(/\\.|^\\.|\\.go|\\.json$)"
+}

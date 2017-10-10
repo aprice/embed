@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// Content represents a single embedded file.
 type Content struct {
 	Path            string
 	Hash            string
