@@ -31,7 +31,11 @@ func New() *EmbeddedLoader {
 
 func (l *EmbeddedLoader) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	name := path.Clean("/" + r.URL.Path)
-	c := l.content[name]
+	c, ok := l.content[name]
+	if !ok {
+		http.NotFound(w, r)
+		return
+	}
 	if r.Method == http.MethodGet && len(c.CompressedBytes) > 0 && r.Header.Get("Range") == "" && strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
 		w.Header().Set("Etag", `"`+c.Hash+`-gzip"`)
 		done, _ := checkPreconditions(w, r, c.Modified)
