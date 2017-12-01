@@ -11,6 +11,7 @@ import (
 
 type Config struct {
 	RootPath            string
+	TrimRootPath        bool
 	Recurse             bool
 	IncludePattern      string
 	includeMatcher      *regexp.Regexp

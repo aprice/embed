@@ -87,6 +87,7 @@ func generateDev(conf Config, out io.Writer) {
 	fmt.Fprintf(out, `package %s
 
 import (
+	"os"
 	"sync"
 	"github.com/aprice/embed/loader"
 )
@@ -97,7 +98,11 @@ var _initOnce sync.Once
 // GetEmbeddedContent returns the Loader for embedded content files.
 func GetEmbeddedContent() loader.Loader {
 	_initOnce.Do(func() {
-		_embeddedContentLoader = loader.NewOnDisk("%s")
+		path := os.Getenv("EMBEDDED_PATH")
+		if path == "" {
+			path = "%s"
+		}
+		_embeddedContentLoader = loader.NewOnDisk(path)
 	})
 	return _embeddedContentLoader
 }
@@ -198,6 +203,7 @@ func generateFile(in io.Reader, out io.Writer, name string, conf Config, modTime
 		fmt.Fprintf(out, "\t\tRaw: `\n%s`,\n", encodeB64(contents))
 	}
 	fmt.Fprint(out, "\t})\n")
+	fmt.Println("Embedded ", name)
 	return nil
 }
 
