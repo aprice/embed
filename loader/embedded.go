@@ -31,6 +31,9 @@ func New() *EmbeddedLoader {
 
 func (l *EmbeddedLoader) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	name := path.Clean("/" + r.URL.Path)
+	if strings.HasSuffix(name, "/") {
+		name = name + "index.html"
+	}
 	c, ok := l.content[name]
 	if !ok {
 		http.NotFound(w, r)

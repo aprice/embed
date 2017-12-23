@@ -60,6 +60,15 @@ func TestCompression(t *testing.T) {
 			t.Errorf("Wrong content length, expected %d, got %d", res.Body.Len(), len(testLoader.content[testTextFile].CompressedBytes))
 		}
 	})
+	t.Run("index", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		req.Header.Set("Accept", "*/*")
+		res := httptest.NewRecorder()
+		testLoader.ServeHTTP(res, req)
+		if res.Code != http.StatusOK {
+			t.Errorf("Not OK: %d", res.Code)
+		}
+	})
 }
 
 func TestConditional(t *testing.T) {

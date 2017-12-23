@@ -43,9 +43,9 @@ func TestGenerate(t *testing.T) {
 package embedded
 
 import (
-        "sync"
-        "time"
-        "github.com/aprice/embed/loader"
+	"sync"
+	"time"
+	"github.com/aprice/embed/loader"
 )
 
 var _embeddedContentLoader loader.Loader
@@ -53,18 +53,18 @@ var _initOnce sync.Once
 
 // GetEmbeddedContent returns the Loader for embedded content files.
 func GetEmbeddedContent() loader.Loader {
-        _initOnce.Do(_initEmbeddedContent)
-        return _embeddedContentLoader
+	_initOnce.Do(_initEmbeddedContent)
+	return _embeddedContentLoader
 }
 
 func _initEmbeddedContent() {
-        l := loader.New()
+	l := loader.New()
 
-        l.Add(&loader.Content{
-                Path:   "/example.html",
-                Hash:    "BqZLX-Gc5JCfp_iX562hjA",
-                Modified: time.Unix(` + mt + `, 0),
-                Compressed: ` + "`" + `
+	l.Add(&loader.Content{
+		Path:   "/example.html",
+		Hash:    "BqZLX-Gc5JCfp_iX562hjA",
+		Modified: time.Unix(` + mt + `, 0),
+		Compressed: ` + "`" + `
 H4sIAAAAAAAA/3yTTY/TMBCG7/yKYbmA1DQtsFClbgQSSFy4ceE4jcfNaG1PZE/SVlX/O0qyZUF8XCJ5
 Yr/vk0eOeW6l0XNH0GrwtXl8EtraKKun+vMJQ+cJPklAjqacpyaQIjQtpky669UVm//MIgbaDUzHTpJC
 I1Ep6u7uyFbbnaWBGyqmxYIjK6MvcoOeduu72mQ9e6r3Ys+XPTYPhyR9tEUjXlL1wq3cyr3eBkwHjtVq
@@ -75,9 +75,9 @@ PeeWLKjAnqDPZMFJAva+zzp+3EBAc1gGjmCl6QNFzUv4Lj0EPI+HQFvOz27J8enEkbWVXqFLLAkakWQ5
 TspAEmB+4HiYCjtKgXNmiUtTdiOsQWgTuV2r2lVleTwel4wRl5IO5dyUy8ee+qskAo5OUpjCl8ulKbGe
 ksrJSTn7Kae/5kcAAAD///DU6xJLAwAA
 ` + "`" + `,
-        })
+	})
 
-        _embeddedContentLoader = l
+	_embeddedContentLoader = l
 }`
 	actual := strings.TrimSpace(buf.String())
 	if actual != expected {
@@ -153,7 +153,7 @@ const exampleDotOrg = `
         margin: 0;
         padding: 0;
         font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        
+
     }
     div {
         width: 600px;
@@ -177,7 +177,7 @@ const exampleDotOrg = `
             padding: 1em;
         }
     }
-    </style>    
+    </style>
 </head>
 
 <body>
